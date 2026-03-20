@@ -1,0 +1,11 @@
+{
+  "domain": "dnsdist",
+  "name": "dnsdist",
+  "version": "1.0.0",
+  "documentation": "https://github.com/metaathron/ha-dnsdist",
+  "issue_tracker": "https://github.com/metaathron/ha-dnsdist/issues",
+  "codeowners": ["@metaathron"],
+  "config_flow": true,
+  "iot_class": "local_polling",
+  "codeowners": []
+}

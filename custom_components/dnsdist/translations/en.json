@@ -1,0 +1,39 @@
+{
+  "title": "dnsdist",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up dnsdist",
+        "data": {
+          "endpoint": "Endpoint",
+          "api_key": "API key"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure dnsdist",
+        "data": {
+          "endpoint": "Endpoint",
+          "api_key": "API key"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid API key"
+    },
+    "abort": {
+      "already_configured": "This endpoint is already configured",
+      "reconfigure_successful": "Reconfiguration was successful"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "dnsdist options",
+        "data": {
+          "scan_interval": "Scan interval (seconds)"
+        }
+      }
+    }
+  }
+}
