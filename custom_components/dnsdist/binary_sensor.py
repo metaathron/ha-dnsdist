@@ -55,7 +55,7 @@ class DnsdistServerStateBinarySensor(DnsdistServerEntity, BinarySensorEntity):
         """Initialize binary sensor."""
         super().__init__(coordinator, server_name)
         self._attr_unique_id = f"{self._entry_id}_server_{server_name}_state"
-        self._attr_name = f"dnsdist {server_name} state"
+        self._attr_name = "State"
 
     @property
     def is_on(self) -> bool | None:

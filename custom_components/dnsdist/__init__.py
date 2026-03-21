@@ -2,15 +2,13 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable
-
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 
 from .api import DnsdistApiClient
-from .const import CONF_API_KEY, CONF_ENDPOINT, DOMAIN, PLATFORMS
+from .const import CONF_API_KEY, CONF_ENDPOINT, CONF_VERIFY_SSL, DOMAIN, PLATFORMS
 from .coordinator import DnsdistDataUpdateCoordinator
 
 
@@ -23,6 +21,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: DnsdistConfigEntry) -> b
         async_get_clientsession(hass),
         entry.data[CONF_ENDPOINT],
         entry.data[CONF_API_KEY],
+        entry.data.get(CONF_VERIFY_SSL, True),
     )
     coordinator = DnsdistDataUpdateCoordinator(hass, client, entry)
     await coordinator.async_config_entry_first_refresh()
@@ -58,7 +57,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: DnsdistConfigEntry) -> b
         known_servers = current_servers
 
     entry.async_on_unload(coordinator.async_add_listener(_remove_missing_servers))
-
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True

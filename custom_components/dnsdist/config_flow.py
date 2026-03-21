@@ -17,7 +17,9 @@ from .const import (
     CONF_API_KEY,
     CONF_ENDPOINT,
     CONF_SCAN_INTERVAL,
+    CONF_VERIFY_SSL,
     DEFAULT_SCAN_INTERVAL,
+    DEFAULT_VERIFY_SSL,
     DOMAIN,
 )
 
@@ -38,6 +40,7 @@ async def _validate_input(hass, data: dict[str, Any]) -> None:
         async_get_clientsession(hass),
         _normalize_endpoint(data[CONF_ENDPOINT]),
         data[CONF_API_KEY],
+        data[CONF_VERIFY_SSL],
     )
     await client.async_get_status()
 
@@ -63,6 +66,7 @@ class DnsdistConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             normalized = {
                 CONF_ENDPOINT: _normalize_endpoint(user_input[CONF_ENDPOINT]),
                 CONF_API_KEY: user_input[CONF_API_KEY],
+                CONF_VERIFY_SSL: user_input.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL),
             }
 
             if any(
@@ -99,6 +103,10 @@ class DnsdistConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             normalized = {
                 CONF_ENDPOINT: _normalize_endpoint(user_input[CONF_ENDPOINT]),
                 CONF_API_KEY: user_input[CONF_API_KEY],
+                CONF_VERIFY_SSL: user_input.get(
+                    CONF_VERIFY_SSL,
+                    entry.data.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL),
+                ),
             }
 
             if any(
@@ -163,5 +171,9 @@ def _build_config_schema(defaults: dict[str, Any] | None) -> vol.Schema:
             vol.Required(
                 CONF_API_KEY, default=defaults.get(CONF_API_KEY, "")
             ): str,
+            vol.Required(
+                CONF_VERIFY_SSL,
+                default=defaults.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL),
+            ): bool,
         }
     )

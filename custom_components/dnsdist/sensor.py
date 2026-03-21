@@ -34,7 +34,7 @@ class DnsdistServerSensorDescription(SensorEntityDescription):
 MAIN_SENSORS: tuple[DnsdistMainSensorDescription, ...] = (
     DnsdistMainSensorDescription(
         key="uptime",
-        name="dnsdist uptime",
+        name="Uptime",
         icon="mdi:clock",
         native_unit_of_measurement=UnitOfTime.SECONDS,
         state_class=SensorStateClass.MEASUREMENT,
@@ -42,14 +42,14 @@ MAIN_SENSORS: tuple[DnsdistMainSensorDescription, ...] = (
     ),
     DnsdistMainSensorDescription(
         key="fd_usage",
-        name="dnsdist fd usage",
-        icon="mdi:file-multiple-outline",
+        name="FD Usage",
+        icon="mdi:file-cabinet",
         state_class=SensorStateClass.MEASUREMENT,
         value_fn=lambda data: data.get("statistics", {}).get("fd-usage"),
     ),
     DnsdistMainSensorDescription(
         key="memory_usage",
-        name="dnsdist memory usage",
+        name="Memory Usage",
         native_unit_of_measurement=UnitOfInformation.BYTES,
         device_class="data_size",
         state_class=SensorStateClass.MEASUREMENT,
@@ -58,35 +58,35 @@ MAIN_SENSORS: tuple[DnsdistMainSensorDescription, ...] = (
     ),
     DnsdistMainSensorDescription(
         key="queries",
-        name="dnsdist queries",
+        name="Queries",
         icon="mdi:counter",
         state_class=SensorStateClass.TOTAL_INCREASING,
         value_fn=lambda data: data.get("statistics", {}).get("queries"),
     ),
     DnsdistMainSensorDescription(
         key="responses",
-        name="dnsdist responses",
+        name="Responses",
         icon="mdi:counter",
         state_class=SensorStateClass.TOTAL_INCREASING,
         value_fn=lambda data: data.get("statistics", {}).get("responses"),
     ),
     DnsdistMainSensorDescription(
         key="self_answered",
-        name="dnsdist self answered",
+        name="Self Answered",
         icon="mdi:reply",
         state_class=SensorStateClass.TOTAL_INCREASING,
         value_fn=lambda data: data.get("statistics", {}).get("self-answered"),
     ),
     DnsdistMainSensorDescription(
         key="cache_hits",
-        name="dnsdist cache hits",
+        name="Cache Hits",
         icon="mdi:database-check-outline",
         state_class=SensorStateClass.TOTAL_INCREASING,
         value_fn=lambda data: data.get("statistics", {}).get("cache-hits"),
     ),
     DnsdistMainSensorDescription(
         key="cache_misses",
-        name="dnsdist cache misses",
+        name="Cache Misses",
         icon="mdi:database-remove-outline",
         state_class=SensorStateClass.TOTAL_INCREASING,
         value_fn=lambda data: data.get("statistics", {}).get("cache-misses"),
@@ -96,21 +96,21 @@ MAIN_SENSORS: tuple[DnsdistMainSensorDescription, ...] = (
 SERVER_SENSORS: tuple[DnsdistServerSensorDescription, ...] = (
     DnsdistServerSensorDescription(
         key="queries",
-        name="queries",
+        name="Queries",
         icon="mdi:counter",
         state_class=SensorStateClass.TOTAL_INCREASING,
         value_fn=lambda server: server.get("queries"),
     ),
     DnsdistServerSensorDescription(
         key="responses",
-        name="responses",
+        name="Responses",
         icon="mdi:counter",
         state_class=SensorStateClass.TOTAL_INCREASING,
         value_fn=lambda server: server.get("responses"),
     ),
     DnsdistServerSensorDescription(
         key="latency",
-        name="latency",
+        name="Latency",
         icon="mdi:timer",
         native_unit_of_measurement=UnitOfTime.MILLISECONDS,
         suggested_display_precision=1,
@@ -119,7 +119,7 @@ SERVER_SENSORS: tuple[DnsdistServerSensorDescription, ...] = (
     ),
     DnsdistServerSensorDescription(
         key="drop_rate",
-        name="drop rate",
+        name="Drop Rate",
         state_class=SensorStateClass.MEASUREMENT,
         value_fn=lambda server: server.get("dropRate"),
     ),
@@ -208,7 +208,7 @@ class DnsdistServerSensor(DnsdistServerEntity, SensorEntity):
         self._attr_unique_id = (
             f"{self._entry_id}_server_{server_name}_{description.key}"
         )
-        self._attr_name = f"dnsdist {server_name} {description.key}"
+        self._attr_name = description.name
 
     @property
     def native_value(self) -> Any:

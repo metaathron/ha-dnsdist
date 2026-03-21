@@ -19,7 +19,7 @@ from .coordinator import DnsdistDataUpdateCoordinator
 class DnsdistBaseEntity(CoordinatorEntity[DnsdistDataUpdateCoordinator]):
     """Base entity for dnsdist."""
 
-    _attr_has_entity_name = False
+    _attr_has_entity_name = True
 
     def __init__(self, coordinator: DnsdistDataUpdateCoordinator) -> None:
         """Initialize base entity."""
@@ -35,7 +35,7 @@ class DnsdistMainEntity(DnsdistBaseEntity):
         """Return main dnsdist device info."""
         return DeviceInfo(
             identifiers={(DOMAIN, f"{self._entry_id}_{MAIN_DEVICE_ID}")},
-            name="dnsdist server",
+            name="DNSdist Server",
             manufacturer="PowerDNS",
             model="dnsdist",
             sw_version=self.coordinator.data.get("version") if self.coordinator.data else None,
@@ -61,7 +61,7 @@ class DnsdistServerEntity(DnsdistBaseEntity):
         server = self.server or {}
         return DeviceInfo(
             identifiers={(DOMAIN, f"{self._entry_id}_server_{self.server_name}")},
-            name=self.server_name,
+            name=f"DNSdist {self.server_name}",
             manufacturer="PowerDNS",
             model="dnsdist backend",
             sw_version=self.coordinator.data.get("version") if self.coordinator.data else None,

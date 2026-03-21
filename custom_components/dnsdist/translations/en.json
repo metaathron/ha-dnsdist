@@ -6,14 +6,16 @@
         "title": "Set up dnsdist",
         "data": {
           "endpoint": "Endpoint",
-          "api_key": "API key"
+          "api_key": "API key",
+          "verify_ssl": "Verify SSL certificate"
         }
       },
       "reconfigure": {
         "title": "Reconfigure dnsdist",
         "data": {
           "endpoint": "Endpoint",
-          "api_key": "API key"
+          "api_key": "API key",
+          "verify_ssl": "Verify SSL certificate"
         }
       }
     },

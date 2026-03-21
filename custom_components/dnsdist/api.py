@@ -23,13 +23,18 @@ class DnsdistApiClient:
     session: ClientSession
     endpoint: str
     api_key: str
+    verify_ssl: bool = True
 
     async def async_get_status(self) -> dict[str, Any]:
         """Fetch status from dnsdist."""
         headers = {"X-API-Key": self.api_key}
 
         try:
-            async with self.session.get(self.endpoint, headers=headers) as response:
+            async with self.session.get(
+                self.endpoint,
+                headers=headers,
+                ssl=self.verify_ssl,
+            ) as response:
                 if response.status in (401, 403):
                     raise DnsdistApiAuthError("Invalid API key")
                 response.raise_for_status()
